@@ -37,7 +37,7 @@ git clone https://github.com/x1sec/cddns
 cd cddns
 make
 ```
-To compile for arm (e.g. to run on a Raspberry pi):
+To compile for arm (e.g. to run on a Raspberry Pi):
 ```
 make build-arm
 ```
@@ -68,7 +68,7 @@ Do you wish to use cloudflare as a proxy (y/n)? y
 Poll interval in seconds (default: 120) ?
 ```
 
-By default the configuration file is written to `$HOME/.config/cddns/config.json`. Specify a custom location with `--config-file`.
+By default the configuration file is written to `$HOME/.config/cddns/config.json`. Specify a custom location with `--config-file` option.
 A template for the configuration file:
 ```json
 {
@@ -80,23 +80,29 @@ A template for the configuration file:
 ```
 
 ### Running as a system service / daemon
-An installation script is provided which will install `cddns` as a system service and start on reboot. The installation script can optionally invoke the configuration setup,
+An installation script is provided which will install `cddns` as a system service which will start on boot:
 
 ```
 make install
 ``` 
-or alternatively 
-```./scripts/install.sh```
-
-The installation script creates a new user named `cddns` and copies both the configuration and binary files to the directory `/opt/cddns/`.
-To stop the service:
+If installing from the downloaded compiled release,
 ```
+sudo ./install.sh
+```
+
+The installation script creates a new user named `cddns` which the service runs as. The configuration and executable files are copied to the directory `/opt/cddns/`.
+To start/stop the service:
+
+```
+systemctl start cddns
 systemctl stop cddns
 ```
 
 ## Setting up Cloudflare
-`cddns` requires a Cloudflare token. After [creating an account with cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) and [changing the nameservers in your domain registrar to to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708), a token needs to generated for `cddns`. 
+`cddns` requires a Cloudflare token. After [creating an account with cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) and [changing the nameservers](https://support.cloudflare.com/hc/en-us/articles/205195708) in your domain registrar to to Cloudflare, a token needs to generated for `cddns`. 
 
-Tokens can be generated under `My Profile` / `API Tokens`. Select 'Edit Zone: Use Template`.
+Tokens can be generated under `My Profile` / `API Tokens`. Select `Edit Zone: Use Template`.
 
 ![](doc/create_token_1.png)
+
+You do not need any `A` records configured in Cloudflare. `cddns` will create an `A` record automatically in Cloudflare if none has been provisioned. `cddns` will modify the first `A` record when a public IP change is detected.
