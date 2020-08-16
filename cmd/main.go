@@ -1,3 +1,9 @@
+/*
+ccdns
+Author:  robert@x1sec.com
+License: see LICENCE
+*/
+
 package main
 
 import (
@@ -44,8 +50,8 @@ func main() {
 
 	if setupMenuFlag {
 		if cddns.CreateConfig(&config) {
-			if cddns.SaveConfig(&config) {
-				fmt.Println("Successfully created configuration.")
+			if cddns.SaveConfig(&config, configFilePath) {
+				fmt.Printf("Successfully saved configuration to: %s\n", configFilePath)
 			}
 		} else {
 			fmt.Fprintf(os.Stderr, "Not creating configuration.")

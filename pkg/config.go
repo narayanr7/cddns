@@ -1,3 +1,9 @@
+/*
+ccdns
+Author:  robert@x1sec.com
+License: see LICENCE
+*/
+
 package cddns
 
 import (
@@ -11,6 +17,8 @@ import (
 	"strconv"
 	"strings"
 )
+
+const CONFIG_FILENAME = "config.json"
 
 type Configuration struct {
 	ZoneName     string `json:"ZoneName"`
@@ -26,18 +34,30 @@ func defaultConfigPath() string {
 		log.Fatal(err)
 	}
 	appConfigDir := filepath.Join(userConfigDir, "cddns")
-	configFilePath := filepath.Join(appConfigDir, "config.json")
+	configFilePath := filepath.Join(appConfigDir, CONFIG_FILENAME)
 	return configFilePath
 }
 
 func LoadConfig(configuration *Configuration, configFilePath string) error {
+
+	// No configuration file path specified, try defaults
 	if configFilePath == "" {
-		configFilePath = defaultConfigPath()
+
+		// First try: current directory
+		workingDir, _ := os.Getwd()
+		configFilePath = filepath.Join(workingDir, CONFIG_FILENAME)
+
+		// Second try: in $HOME/.config/
+		if _, err := os.Stat(configFilePath); os.IsNotExist(err) {
+			configFilePath = defaultConfigPath()
+		}
+
 	}
-	DebugPrint("Configuration file: " + configFilePath)
+
 	if _, err := os.Stat(configFilePath); os.IsNotExist(err) {
 		return err
 	}
+	DebugPrint("Using configuration file: " + configFilePath)
 	configData, err := ioutil.ReadFile(configFilePath)
 	if err != nil {
 		log.Fatal(err)
@@ -52,19 +72,24 @@ func LoadConfig(configuration *Configuration, configFilePath string) error {
 	return nil
 }
 
-func SaveConfig(configuration *Configuration) bool {
-	userConfigDir, err := os.UserConfigDir()
-	if err != nil {
-		log.Fatal(err)
-	}
-	appConfigDir := filepath.Join(userConfigDir, "cddns")
-	err = os.MkdirAll(appConfigDir, 0700)
-	if err != nil {
-		log.Fatal(err)
+func SaveConfig(configuration *Configuration, customFilePath string) bool {
+	var configFilePath string
+	if customFilePath == "" {
+		userConfigDir, err := os.UserConfigDir()
+		if err != nil {
+			log.Fatal(err)
+		}
+		appConfigDir := filepath.Join(userConfigDir, "cddns")
+		err = os.MkdirAll(appConfigDir, 0700)
+		if err != nil {
+			log.Fatal(err)
+		}
+		configFilePath = filepath.Join(appConfigDir, CONFIG_FILENAME)
+	} else {
+		configFilePath = customFilePath
 	}
 
-	configFilePath := filepath.Join(appConfigDir, "config.json")
-	jsonOut, err := json.Marshal(configuration)
+	jsonOut, err := json.MarshalIndent(configuration, "", "\t")
 	if err != nil {
 		log.Fatal(err)
 	}

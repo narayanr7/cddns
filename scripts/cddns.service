@@ -1,0 +1,13 @@
+[Unit]
+Description=Cloudflare Dynamic DNS Update Daemon
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/opt/cddns/cddns
+User=cddns
+Restart=always
+WorkingDirectory=/opt/cddns/
+
+[Install]
+WantedBy=multi-user.target

@@ -1,3 +1,9 @@
+/*
+ccdns
+Author:  robert@x1sec.com
+License: see LICENCE
+*/
+
 package cddns
 
 import (
