@@ -2,8 +2,10 @@
 A DDNS (Dynamic DNS) agent for Cloudflare
 
 ## Introduction
-CDDNS is an agent that continuously monitors changes in the public Internet IP address of the connection for a host and updates Cloudflare's DNS when there is a change. 
-Cloudflare's reverse proxy functionality is supported. A useful use case is when you would like to host a webserver on an Internet connection where the public IP address may change (e.g. home Internet connection) and you would like to hide/protect your home Internet IP address when resolving and accessing the website. 
+CDDNS is an agent that continuously monitors changes in the public Internet IP address of a connection for a host and updates Cloudflare's DNS when a change is detected.
+
+
+Cloudflare's reverse proxy functionality is supported. A useful use case is when you would like to host a webserver on an Internet connection where the public IP address may change (e.g. home Internet connection) and you would like to hide/protect your home Internet IP address behind Cloudflare. 
 
 An example setup illustrated below has a Raspberry Pi running a webserver with CDDNS on a home Internet connection. The website's domain name (let's use example.com) resolves to Cloudflare's DNS servers. When a web client access example.com, the HTTP/S connection terminates on Cloudflare's infrastructure. Cloudflare then proxies the connection to the home Internet connection where the home router port forwards to the Raspberry Pi. At any time if the home Internet connection IP address changes, CDDNS sends an update informing Cloudflare of the new home IP address for it to proxy to.
 
@@ -66,7 +68,7 @@ Poll interval in seconds (default: 120) ?
 ```
 
 By default the configuration file is written to `$HOME/.config/cddns/config.json`. Specify a custom location with `--config-file`.
-The configuration file format:
+A template for the configuration file:
 ```json
 {
         "ZoneName": "domain_name_here",
