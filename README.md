@@ -92,5 +92,4 @@ The installation script creates a new user named `cddns` and copies both the con
 
 Tokens can be generated under `My Profile` / `API Tokens`. Select 'Edit Zone: Use Template`.
 
-
-
+![](doc/create_token_1.png)
