@@ -17,11 +17,11 @@ An example setup illustrated below has a Raspberry Pi running a webserver with C
 ### Binaries
 Compiled arm and X86_64 executable files for Linux are available [here](https://github.com/x1sec/cddns/releases/).
 
-An example to download and install on a Raspberry Pi:
+An example to download and install on a Raspberry Pi. A Cloudflare account is required with an access token ready.
 ```
 wget https://github.com/x1sec/cddns/releases/latest/download/cddns-linux-arm.tar.gz
-tar xf cddns-linux-arm.tar.gz
-cd cddns-linux-arm.tar.gz
+tar -xf cddns-linux-arm.tar.gz
+cd cddns
 
 sudo ./install.sh
 ```
