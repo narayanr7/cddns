@@ -19,30 +19,31 @@ Compiled arm and X86_64 executable files for Linux are available [here](https://
 
 An example to download and install on a Raspberry Pi:
 ```
-$ wget https://github.com/x1sec/commit-stream/releases/latest/download/cddns-linux-amd64.gz
-$ tar xf cddns-linux-arm.tar.gz
-$ cd cddns-linux-arm.tar.gz
-$ sudo ./install.sh
+wget https://github.com/x1sec/commit-stream/releases/latest/download/cddns-linux-arm.tar.gz
+tar xf cddns-linux-arm.tar.gz
+cd cddns-linux-arm.tar.gz
+
+sudo ./install.sh
 ```
 
 ### Go get
 If you would prefer to build yourself (and Go is setup [correctly](https://golang.org/doc/install)):
 ```
-$ go get -u github.com/x1sec/cddns
+go get -u github.com/x1sec/cddns
 ```
 ### Building from source
 ```
-$ git clone https://github.com/x1sec/cddns
-$ cd cddns
-$ make
+git clone https://github.com/x1sec/cddns
+cd cddns
+make
 ```
 To compile for arm (e.g. to run on a Raspberry pi):
 ```
-$ make build-arm
+make build-arm
 ```
 To install as a system service:
 ```
-$ sudo make install
+sudo make install
 ```
 
 ## Running
@@ -88,6 +89,10 @@ or alternatively
 ```./scripts/install.sh```
 
 The installation script creates a new user named `cddns` and copies both the configuration and binary files to the directory `/opt/cddns/`.
+To stop the service:
+```
+systemctl stop cddns
+```
 
 ## Setting up Cloudflare
 `cddns` requires a Cloudflare token. After [creating an account with cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) and [changing the nameservers in your domain registrar to to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708), a token needs to generated for `cddns`. 
