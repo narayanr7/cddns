@@ -11,7 +11,17 @@ An example setup illustrated below has a Raspberry Pi running a webserver with C
 
 ![](doc/example.png)
 
+The steps to configure a scenario as described above:
+
+- Register a domain name
+- Create a free Cloudflare account
+- Assign Cloudflare nameservers for the domain name
+- Generate a Cloudflare access token
+- Install `cddns` on a internal system such as a Raspberry Pi
+- Configure port forwarding on router for port 80/443 to the internal system
+
 # Usage
+
 ## Installation
 
 ### Binaries
