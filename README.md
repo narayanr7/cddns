@@ -19,7 +19,7 @@ Compiled arm and X86_64 executable files for Linux are available [here](https://
 
 An example to download and install on a Raspberry Pi:
 ```
-wget https://github.com/x1sec/commit-stream/releases/latest/download/cddns-linux-arm.tar.gz
+wget https://github.com/x1sec/cddns/releases/download/latest/cddns-linux-arm.tar.gz
 tar xf cddns-linux-arm.tar.gz
 cd cddns-linux-arm.tar.gz
 
